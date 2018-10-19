@@ -54,7 +54,7 @@ namespace twozerofoureight
                     }
                     if (board[i,j] != 0) //there is the empty tile in the board
                     {
-                        count++; //count the tile
+                        count++; //count the tile//
                     }
                 }             
             }
