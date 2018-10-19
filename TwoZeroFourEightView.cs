@@ -28,6 +28,8 @@ namespace twozerofoureight
         public void Notify(Model m)
         {
             UpdateBoard(((TwoZeroFourEightModel)m).GetBoard());
+            UpdateScore(((TwoZeroFourEightModel)m).Getscore());
+            UpdateGameOver(((TwoZeroFourEightModel)m).CheckGameOver());
         }
 
         private void UpdateTile(Label l, int i)
@@ -78,26 +80,107 @@ namespace twozerofoureight
             UpdateTile(lbl32, board[3, 2]);
             UpdateTile(lbl33, board[3, 3]);
         }
+        //make key W-A-S-D can control the game movement action 
+        private void TwoZeroFourEightView_KeyDown(object sender, KeyEventArgs e)
+        {
+            switch (e.KeyData)
+            {
+                case Keys.W: //in case press buttom W to control UP action
+                case Keys.Up:
+                    controller.ActionPerformed(TwoZeroFourEightController.UP);
+                    break;
+                case Keys.S: //in case press buttom S to control DOWN action
+                case Keys.Down:
+                    controller.ActionPerformed(TwoZeroFourEightController.DOWN);
+                    break;
+                case Keys.A: //in case press buttom A to control LEFT action
+                case Keys.Left:
+                    controller.ActionPerformed(TwoZeroFourEightController.LEFT);
+                    break;
+                case Keys.D: //in case press buttom D to control RIGHT action
+                case Keys.Right:
+                    controller.ActionPerformed(TwoZeroFourEightController.RIGHT);
+                    break;
 
-        private void btnLeft_Click(object sender, EventArgs e)
+            }
+        }
+        private void UpdateScore(int score) //display the score
+        {
+            lblScore.Text = Convert.ToString(score); //make the label display the score
+        }
+        private void UpdateGameOver(int gg)
+        {
+            if (gg == 1)//if win
+            {
+                GameOver.Text = "YOU WIN!!!";//display the word YOU WIN!!!
+                //make the button disable
+                btnUp.Enabled = false;
+                btnDown.Enabled = false;
+                btnLeft.Enabled = false;
+                btnRight.Enabled = false;
+            }
+            if (gg == 2)//lose
+            {
+                GameOver.Text = "YOU LOSE!!!"; //display the word YOU LOSE!!!
+                //make the button disable
+                btnUp.Enabled = false;
+                btnDown.Enabled = false;
+                btnLeft.Enabled = false;
+                btnRight.Enabled = false;
+            }
+
+        }
+        private void btnLeft_Click(object sender, EventArgs e) //make buttom left arrow can control the action
         {
             controller.ActionPerformed(TwoZeroFourEightController.LEFT);
         }
 
-        private void btnRight_Click(object sender, EventArgs e)
+        private void btnRight_Click(object sender, EventArgs e)//make buttom right arrow can control the action
         {
             controller.ActionPerformed(TwoZeroFourEightController.RIGHT);
         }
 
-        private void btnUp_Click(object sender, EventArgs e)
+        private void btnUp_Click(object sender, EventArgs e)//make buttom up arrow can control the action
         {
             controller.ActionPerformed(TwoZeroFourEightController.UP);
         }
 
-        private void btnDown_Click(object sender, EventArgs e)
+        private void btnDown_Click(object sender, EventArgs e)//make buttom down arrow can control the action
         {
             controller.ActionPerformed(TwoZeroFourEightController.DOWN);
         }
 
+        private void TwoZeroFourEightView_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {   //recieve the input action from the player  to make it display that action
+            switch (e.KeyCode)
+            {
+                case Keys.Up:
+                case Keys.Down:
+                case Keys.Left:
+                case Keys.Right:
+                    e.IsInputKey = true;
+                    break;
+            }
+        }
+        //function to make buttom left can control the tile to go letf
+        private void btnLeft_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
+            TwoZeroFourEightView_PreviewKeyDown(sender, e);
+        }
+        //function to make buttom up can control the tile to go up
+        private void btnUp_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
+            TwoZeroFourEightView_PreviewKeyDown(sender, e);
+        }
+        //function to make buttom right can control the tile to go right
+        private void btnRight_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
+            TwoZeroFourEightView_PreviewKeyDown(sender, e);
+        }
+        //function to make buttom  down can control the tile to go down
+        private void btnDown_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
+            TwoZeroFourEightView_PreviewKeyDown(sender, e);
+        }
     }
 }
