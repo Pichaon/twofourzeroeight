@@ -42,6 +42,7 @@ namespace twozerofoureight
 
         private void AddRandomSlot()
         {
+            // add random slot
             while (true)
             {
                 int x = rand.Next(boardSize);
